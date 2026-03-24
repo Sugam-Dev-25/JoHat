@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import {BedIcon, BathtubIcon, RulerIcon} from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import { getProperties } from "../../Api/Api";
 
@@ -63,7 +63,7 @@ const FeatureProperties = () => {
                       {/* BED */}
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Bed size={16} weight="fill" /> */}
+                          <BedIcon size={14} weight="regular" />
                         </span>
                         <span>{item.acf?.bedrooms}</span>
                       </div>
@@ -71,7 +71,7 @@ const FeatureProperties = () => {
                       {/* BATH */}
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Bathtub size={16} weight="fill" /> */}
+                          <BathtubIcon size={14} weight="regular" />
                         </span>
                         <span>{item.acf?.bathrooms}</span>
                       </div>
@@ -79,7 +79,7 @@ const FeatureProperties = () => {
                       {/* AREA */}
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Ruler size={16} weight="fill" /> */}
+                          <RulerIcon size={14} weight="regular" />
                         </span>
                         <span>{item.acf?.sqft} Sqft</span>
                       </div>
@@ -94,13 +94,6 @@ const FeatureProperties = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* BUTTON */}
-        <div className="flex justify-center mt-12">
-          <button className="border border-gray-400 px-6 py-2 rounded-full hover:bg-black hover:text-white transition">
-            View All Properties
-          </button>
         </div>
       </div>
     </div>

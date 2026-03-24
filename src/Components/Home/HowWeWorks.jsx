@@ -33,22 +33,19 @@ const HowWeWorks = () => {
   return (
     <div className="bg-[#f5f5f5] py-20">
       <div className="max-w-[1200px] mx-auto px-4">
-
         {/* HEADING */}
         <h2 className="text-center text-[35px] font-[#1c1c1c] font-bold tracking-[2px] uppercase font-designer">
           How We Works
         </h2>
 
         <p className="text-center text-gray-500 mt-3 font-[#333333] max-w-[700px] mx-auto text-[16px] font-lato">
-          We simplify the journey from funding to property ownership with a clear,
-          step-by-step process designed for speed and confidence.
+          We simplify the journey from funding to property ownership with a
+          clear, step-by-step process designed for speed and confidence.
         </p>
 
         {/* MAIN BOX */}
         <div className="mt-12 bg-black p-4 rounded-lg relative">
-
           <div className="grid md:grid-cols-2 gap-4">
-
             {/* LEFT IMAGE */}
             <div className="h-[350px] md:h-[420px] overflow-hidden relative">
               <img
@@ -61,7 +58,6 @@ const HowWeWorks = () => {
 
             {/* RIGHT CONTENT */}
             <div className="flex flex-col justify-center relative z-10">
-
               {stepsData.map((step, index) => (
                 <div
                   key={step.id}
@@ -72,31 +68,16 @@ const HowWeWorks = () => {
                       : "text-white hover:bg-white/10"
                   }`}
                 >
-
                   <h3 className="font-bold uppercase text-[15px] tracking-wide">
                     {step.id}. {step.title}
                   </h3>
 
-                  <p className="text-sm mt-2 leading-relaxed">
-                    {step.desc}
-                  </p>
-
+                  <p className="text-sm mt-2 leading-relaxed">{step.desc}</p>
                 </div>
               ))}
-
             </div>
-
           </div>
-
         </div>
-
-        {/* BUTTON */}
-        <div className="mt-10">
-          <button className="w-full bg-gradient-to-r from-teal-700 to-green-600 text-white py-3 rounded-full font-semibold">
-            Get Pre-Approved
-          </button>
-        </div>
-
       </div>
     </div>
   );
