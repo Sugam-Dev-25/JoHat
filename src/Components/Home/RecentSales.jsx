@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import {BedIcon, BathtubIcon, RulerIcon} from "@phosphor-icons/react";
 import { getProperties } from "../../Api/Api";
 import { useNavigate } from "react-router-dom";
 
@@ -22,11 +22,8 @@ const RecentSales = () => {
 
   useEffect(() => {
     getProperties().then((res) => {
-
       // ✅ FILTER SOLD
-      let sold = res.filter(
-        (item) => item.acf?.status === "Sold"
-      );
+      let sold = res.filter((item) => item.acf?.status === "Sold");
 
       // 🔥 SORT LATEST FIRST
       sold.sort((a, b) => {
@@ -40,22 +37,20 @@ const RecentSales = () => {
   return (
     <div className="bg-[#f5f5f5] py-16">
       <div className="max-w-[1200px] mx-auto px-4">
-
         {/* HEADING */}
         <h2 className="text-center text-[35px] font-[#1c1c1c] font-bold tracking-[2px] uppercase font-designer">
           Our Recent Sales
         </h2>
 
         <p className="text-center text-gray-500 mt-3 font-[#333333] max-w-[700px] mx-auto text-[16px] font-lato">
-          We take pride in helping property investors turn great opportunities into profitable ventures.
+          We take pride in helping property investors turn great opportunities
+          into profitable ventures.
         </p>
 
         {/* GRID */}
         <div className="grid md:grid-cols-2 gap-6 mt-12">
-
           {data.slice(0, 4).map((item) => {
-            const image =
-              item._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+            const image = item._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
             return (
               <div
@@ -63,7 +58,6 @@ const RecentSales = () => {
                 onClick={() => navigate(`/property/${item.id}`)}
                 className="relative rounded-xl overflow-hidden cursor-pointer group"
               >
-
                 {/* IMAGE */}
                 <img
                   src={image}
@@ -81,10 +75,8 @@ const RecentSales = () => {
 
                 {/* CONTENT */}
                 <div className="absolute bottom-0 w-full p-6 text-white">
-
                   {/* TOP ROW */}
                   <div className="flex justify-between items-center">
-
                     {/* TITLE */}
                     <h3 className="text-lg font-medium">
                       {item.title.rendered}
@@ -92,28 +84,26 @@ const RecentSales = () => {
 
                     {/* ICONS */}
                     <div className="flex items-center gap-4 text-sm">
-
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Bed size={14} weight="fill" /> */}
+                          <BedIcon size={14} weight="regular" />
                         </span>
                         {item.acf?.bedrooms}
                       </div>
 
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Bathtub size={14} weight="fill" /> */}
+                          <BathtubIcon size={14} weight="regular" />
                         </span>
                         {item.acf?.bathrooms}
                       </div>
 
                       <div className="flex items-center gap-2">
                         <span className="w-8 h-8 flex items-center justify-center bg-yellow-400 rounded-full text-black">
-                          {/* <Ruler size={14} weight="fill" /> */}
+                          <RulerIcon size={14} weight="regular" />
                         </span>
                         {item.acf?.sqft} Sqft
                       </div>
-
                     </div>
                   </div>
 
@@ -124,22 +114,11 @@ const RecentSales = () => {
                       {formatDate(item.acf?.sold_date)}
                     </span>
                   </p>
-
                 </div>
-
               </div>
             );
           })}
-
         </div>
-
-        {/* BUTTON */}
-        <div className="flex justify-center mt-12">
-          <button className="border border-gray-400 px-6 py-2 rounded-full hover:bg-black hover:text-white transition">
-            View All Sold Properties
-          </button>
-        </div>
-
       </div>
     </div>
   );

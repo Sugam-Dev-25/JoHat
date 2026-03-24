@@ -40,15 +40,14 @@ const HowWeWorks = () => {
         </h2>
 
         <p className="text-center text-gray-500 mt-3 font-[#333333] max-w-[700px] mx-auto text-[16px] font-lato">
-          We simplify the journey from funding to property ownership with a clear,
-          step-by-step process designed for speed and confidence.
+          We simplify the journey from funding to property ownership with a
+          clear, step-by-step process designed for speed and confidence.
         </p>
 
         {/* MAIN BOX */}
         <div className="mt-12 bg-black p-[12px] md:p-[15px] xl:p-[26px] relative">
 
           <div className="grid md:grid-cols-2 gap-4">
-
             {/* LEFT IMAGE */}
             <div className="h-[350px] md:h-[530px] lg:h-[490px] xl:h-[500px] overflow-hidden relative">
               <img
@@ -61,7 +60,6 @@ const HowWeWorks = () => {
 
             {/* RIGHT CONTENT */}
             <div className="flex flex-col justify-center relative z-10">
-
               {stepsData.map((step, index) => (
                 <div
                   key={step.id}
@@ -82,11 +80,8 @@ const HowWeWorks = () => {
 
                 </div>
               ))}
-
             </div>
-
           </div>
-
         </div>
 
         {/* BUTTON */}
