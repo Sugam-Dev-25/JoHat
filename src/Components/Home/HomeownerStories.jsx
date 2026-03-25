@@ -50,8 +50,8 @@ const HomeownerStories = () => {
   }, []);
 
   return (
-    <section className="bg-[#F4F1ED] py-24 px-4">
-      <div className="max-w-[1440px] mx-auto md:px-8 lg:px-12 xl:px-[60px]">
+    <section className="bg-[#F4F1ED] py-24">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[60px]">
 
         {/* TITLE */}
         <h2 className="uppercase tracking-widest text-xl md:text-[35px] font-normal mb-[20px] font-designer">
