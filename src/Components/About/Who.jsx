@@ -1,10 +1,50 @@
-import React from "react";
-// import your image later
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 import mainImg from "../../assets/house.png";
 import icon1 from "../../assets/icon1.png";
 import icon2 from "../../assets/icon2.png";
-
+import gsap from "gsap";
+import { useEffect } from "react";
 const Who = () => {
+  useEffect(() => {
+  gsap.from(".left-image-box", {
+    scrollTrigger: {
+      trigger: ".left-image-box",
+      start: "top 80%",
+      toggleActions: "play reverse play reverse"
+    },
+    x: -100,
+    opacity: 0,
+    duration: 1.2,
+    ease: "power2.out"
+  });
+
+  gsap.utils.toArray(".vision-mission-card").forEach((card) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        toggleActions: "play reverse play reverse"
+      },
+      y: 60,
+      opacity: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)"
+    });
+  });
+  gsap.from(".who-heading", {
+  scrollTrigger: {
+    trigger: ".who-heading",
+    start: "top 85%",
+    toggleActions: "play reverse play reverse"
+  },
+  y: 50,
+  opacity: 0,
+  duration: 0.8,
+  ease: "power3.out"
+});
+
+}, []);
   return (
     <div className="bg-white py-16">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[60px]">
@@ -13,7 +53,7 @@ const Who = () => {
         <div className="flex flex-col lg:flex-col xl:flex-row gap-10 xl:gap-[72px] items-center lg:items-start">
 
           {/* LEFT IMAGE */}
-          <div className="border-[4px] border-[#FACA51] p-[16px_19px] box-border">
+          <div className="border-[4px] border-[#FACA51] p-[16px_19px] box-border left-image-box">
             <img
               src={mainImg} // replace later
               alt="Who We Are"
@@ -24,10 +64,9 @@ const Who = () => {
           {/* RIGHT CONTENT */}
           <div className="flex-1 py-0 xl:py-16">
 
-            {/* HEADING */}
-            <h2 className="text-[28px] md:text-[32px] lg:text-[35px] font-normal text-[#333333] font-designer">
-              WHO WE ARE
-            </h2>
+          <h2 className="who-heading text-[28px] md:text-[32px] lg:text-[35px] font-normal text-[#333333] font-designer">
+  WHO WE ARE
+</h2>
 
             {/* DESCRIPTION */}
             <p className="mt-4 text-[16px] md:text-[17px] lg:text-[17px] text-[#333333] leading-relaxed">
@@ -42,7 +81,7 @@ const Who = () => {
             <div className="mt-8 flex flex-col sm:flex-row gap-[14px]">
 
               {/* CARD 1 */}
-              <div className="bg-[#F4F1ED] rounded-[16px] p-6 w-full sm:w-[337px] h-auto sm:h-[247px]">
+              <div className="bg-[#F4F1ED] rounded-[16px] p-6 w-full sm:w-[337px] h-auto sm:h-[247px] vision-mission-card">
                 
                 {/* ICON */}
                 <div className="w-10 h-10 mb-4">
@@ -66,7 +105,7 @@ const Who = () => {
               </div>
 
               {/* CARD 2 */}
-              <div className="bg-[#F4F1ED] rounded-[16px] p-6 w-full sm:w-[337px] h-auto sm:h-[247px]">
+              <div className="bg-[#F4F1ED] rounded-[16px] p-6 w-full sm:w-[337px] h-auto sm:h-[247px] vision-mission-card">
                 
                 {/* ICON */}
                 <div className="w-10 h-10 mb-4">
