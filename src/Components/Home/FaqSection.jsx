@@ -58,7 +58,7 @@ const FAQSection = () => {
                 onClick={() => toggleAccordion(item.id)}
                 className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
               >
-                <span className="font-bold text-gray-800 text-lg">
+                <span className="font-bold text-gray-800 text-base md:text-lg">
                   {item.question}
                 </span>
                 <div className={`p-1 rounded-full transition-colors duration-300 cursor-pointer ${
@@ -74,10 +74,10 @@ const FAQSection = () => {
               
               <div 
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openId === item.id ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+                  openId === item.id ? 'max-h-45 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="p-5 pt-0 text-gray-600 leading-relaxed border-t border-transparent">
+                <div className="p-5 pt-0 text-gray-600 leading-relaxed border-t border-transparent text-sm md:text-base">
                   {item.answer}
                 </div>
               </div>
