@@ -37,7 +37,7 @@ const ServiceBanner = () => {
   }, []);
   return (
     <section
-      className="relative h-[440px] min-[360px]:h-[540px] md:h-[650px] lg:h-[650px] w-full overflow-hidden bg-cover bg-center"
+      className="relative h-[440px]  md:h-[650px] w-full overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${servicebanner})` }}
     >
       {/* Overlay (optional for readability) */}
