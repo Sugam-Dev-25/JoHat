@@ -45,7 +45,7 @@ const required = { required: "This field is required" };
           GET IN TOUCH WITH US
         </h2>
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
           
           {/* LEFT SIDE */}
           <div className="flex flex-col gap-6 max-w-[420px] mt-3">
