@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import profileImg from "../../assets/james.png"; // replace later
+import profileImg from "../../assets/james.webp"; // replace later
 import gsap from "gsap";
 const AboutJames = () => {
     // Inside AboutJames:

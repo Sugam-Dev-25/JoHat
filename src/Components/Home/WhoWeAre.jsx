@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import img1 from "../../assets/who-we-are-1.jpg";
+import img1 from "../../assets/who-we-are-1.webp";
 import img2 from "../../assets/who-we-are-2.jpg";
-import img3 from "../../assets/who-we-are-3.jpg";
+import img3 from "../../assets/james.webp";
 
 const WhoWeAre = () => {
   const sectionRef = useRef(null);

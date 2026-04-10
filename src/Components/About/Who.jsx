@@ -1,6 +1,6 @@
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
-import mainImg from "../../assets/house.png";
+import mainImg from "../../assets/house.webp";
 import icon1 from "../../assets/icon1.png";
 import icon2 from "../../assets/icon2.png";
 import gsap from "gsap";

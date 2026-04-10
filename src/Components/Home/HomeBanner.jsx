@@ -42,7 +42,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[440px] min-[360px]:h-[540px] md:h-[650px] lg:h-[850px] w-full overflow-hidden bg-cover bg-center"
+      className="relative h-[440px] min-[360px]:h-[520px] md:h-[650px] lg:h-[850px] w-full overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${homebanner})` }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
