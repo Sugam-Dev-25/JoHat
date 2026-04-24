@@ -49,134 +49,176 @@ export default function ContactForm() {
   /* =========================
      SUBMIT
   ========================= */
- const onSubmitForm = (data) => {
-  // STEP 1: if captcha not shown → show it first
-  if (!showCaptcha) {
-    setShowCaptcha(true);
-    generateCaptcha();
-    return;
-  }
+  const onSubmitForm = async (data) => {
+    // STEP 1: captcha show
+    if (!showCaptcha) {
+      setShowCaptcha(true);
+      generateCaptcha();
+      return;
+    }
 
-  // STEP 2: captcha already visible → final submit
-  console.log("Final Form Data:", data);
-  console.log("Submitted Successfully");
+    // STEP 2: send data
+    try {
+      const res = await fetch(
+        "https://admin.johat-enterprises.com/wp-json/contact/v1/send",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      );
 
-  reset();
-  setShowCaptcha(false);
-  generateCaptcha();
-};
-const sectionRef = useRef(null);
-const leftItemsRef = useRef([]);
-const rightItemsRef = useRef([]);
-useEffect(() => {
-  gsap.registerPlugin(ScrollTrigger);
+      const result = await res.json();
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top 80%",
-      toggleActions: "play none none none", // no reverse
-    },
-  });
+      if (result.status === "success") {
+        alert("Message sent successfully ✅");
 
-  // LEFT SIDE (slide from left)
-  tl.from(leftItemsRef.current, {
-    x: -100,
-    opacity: 0,
-    duration: 1.2,
-    ease: "power3.out",
-    stagger: 0.25,
-  });
+        reset();
+        setShowCaptcha(false);
+        generateCaptcha();
+      } else {
+        alert("Failed to send ❌");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
+  };
 
-  // RIGHT SIDE (slide up)
-  tl.from(
-    rightItemsRef.current,
-    {
-      y: 100,
+  const sectionRef = useRef(null);
+  const leftItemsRef = useRef([]);
+  const rightItemsRef = useRef([]);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none", // no reverse
+      },
+    });
+
+    // LEFT SIDE (slide from left)
+    tl.from(leftItemsRef.current, {
+      x: -100,
       opacity: 0,
       duration: 1.2,
       ease: "power3.out",
-      stagger: 0.2,
-    },
-    "-=0.8"
-  );
-}, []);
+      stagger: 0.25,
+    });
+
+    // RIGHT SIDE (slide up)
+    tl.from(
+      rightItemsRef.current,
+      {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.2,
+      },
+      "-=0.8",
+    );
+  }, []);
   const required = { required: "This field is required" };
 
   return (
-   <section ref={sectionRef} className=" bg-white relative pb-[54px]">
-        <div className="absolute w-full -top-[100px] ">
-<div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[60px] ">
+    <section ref={sectionRef} className=" bg-white relative pb-[54px]">
+      <div className="absolute w-full -top-[100px] ">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[60px] ">
+          {/* Card (overlay style) */}
+          <div className="border-[10px] border-white shadow-md grid grid-cols-1 lg:grid-cols-2 ">
+            {/* LEFT COLUMN */}
+            <div className="bg-[#1C1C1C] text-white py-10  px-4 md:px-8 lg:pl-10 lg:pr-10  xl:pr-[150px] relative overflow-hidden  ">
+              {/* TOP CONTENT */}
+              <div ref={(el) => (leftItemsRef.current[0] = el)}>
+                <h2 className="text-[28px] font-bold uppercase tracking-wide font-designer">
+                  Contact Information
+                </h2>
+                <p className="text-base text-[#C9C9C9] mt-5">
+                  Say something to start the contact
+                </p>
+              </div>
 
-      {/* Card (overlay style) */}
-      <div className="border-[10px] border-white shadow-md grid grid-cols-1 lg:grid-cols-2 ">
+              <div
+                ref={(el) => (leftItemsRef.current[1] = el)}
+                className="py-20 space-y-9 text-base"
+              >
+                {/* PHONE */}
+                <div className="flex gap-[25px]">
+                  <PhoneCallIcon size={24} color="#ededed" weight="fill" />
 
-             {/* LEFT COLUMN */}
-        <div className="bg-[#1C1C1C] text-white py-10  px-4 md:px-8 lg:pl-10 lg:pr-10  xl:pr-[150px] relative overflow-hidden  ">
+                  <div className="flex flex-col gap-2">
+                    <a href="tel:+12314596853">+1 2314596853</a>
+                    <a href="tel:+12314272289">+1 2314272289</a>
+                  </div>
+                </div>
 
-          {/* TOP CONTENT */}
-          <div ref={(el) => (leftItemsRef.current[0] = el)}>
-            <h2 className="text-[28px] font-bold uppercase tracking-wide font-designer">
-              Contact Information
-            </h2>
-            <p className="text-base text-[#C9C9C9] mt-5">
-              Say something to start the contact
-            </p>
-          </div>
-         
-            <div ref={(el) => (leftItemsRef.current[1] = el)} className="py-20 space-y-9 text-base">
+                {/* EMAIL */}
+                <div className="flex gap-[25px]">
+                  <EnvelopeSimpleIcon size={24} color="#ededed" weight="fill" />
 
-  {/* PHONE */}
-  <div className="flex gap-[25px]">
-    <PhoneCallIcon size={24} color="#ededed" weight="fill" />
+                  <div className="flex flex-col gap-2">
+                    <a href="mailto:johat1o11953@outlook.com">
+                      johat1o11953@outlook.com
+                    </a>
+                    <a href="mailto:james@johatenterprises.com">
+                      james@johatenterprises.com
+                    </a>
+                  </div>
+                </div>
 
-    <div className="flex flex-col gap-2">
-      <a href="tel:+12314596853">+1 2314596853</a>
-      <a href="tel:+12314272289">+1 2314272289</a>
-    </div>
-  </div>
+                {/* ADDRESS */}
+                <div className="flex gap-[25px]">
+                  <MapPinIcon size={24} color="#ededed" weight="fill" />
 
-  {/* EMAIL */}
-  <div className="flex gap-[25px]">
-    <EnvelopeSimpleIcon size={24} color="#ededed" weight="fill" />
+                  <a href="https://maps.app.goo.gl/tCoLd3a9tuKC99aN6">
+                    3975 Pulverwoods Rd, Williamsburg, MI <br />
+                    49690, USA
+                  </a>
+                </div>
+              </div>
 
-    <div className="flex flex-col gap-2">
-      <a href="mailto:johat1o11953@outlook.com">
-        johat1o11953@outlook.com
-      </a>
-      <a href="mailto:james@johatenterprises.com">
-        james@johatenterprises.com
-      </a>
-    </div>
-  </div>
+              {/* BOTTOM ICONS */}
+              <div
+                ref={(el) => (leftItemsRef.current[2] = el)}
+                className="relative flex gap-4 pt-16 z-20"
+              >
+                <a
+                  href="https://www.facebook.com/JoheatEnterprises"
+                  className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"
+                >
+                  <FacebookLogoIcon size={24} />
+                </a>
+                <a
+                  href="https://x.com/JohatEnter3002"
+                  className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"
+                >
+                  <XLogoIcon size={24} />
+                </a>
+                <a
+                  href="https://www.instagram.com/accounts/login/?next=%2Fjohatenterprises%2F&source=omni_redirect"
+                  className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"
+                >
+                  <InstagramLogoIcon size={24} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/james-taylor-69b20544/"
+                  className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"
+                >
+                  <LinkedinLogoIcon size={24} />
+                </a>
+              </div>
 
-  {/* ADDRESS */}
-  <div className="flex gap-[25px]">
-    <MapPinIcon size={24} color="#ededed" weight="fill" />
-
-    <a href="https://maps.app.goo.gl/tCoLd3a9tuKC99aN6">
-      3975 Pulverwoods Rd, Williamsburg, MI <br />
-      49690, USA
-    </a>
-  </div>
-
-</div>
-
-          {/* BOTTOM ICONS */}
-          <div ref={(el) => (leftItemsRef.current[2] = el)} className="relative flex gap-4 pt-16 z-20">
-            <a href="https://www.facebook.com/JoheatEnterprises" className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"><FacebookLogoIcon size={24}/></a>
-            <a href="https://x.com/JohatEnter3002" className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"><XLogoIcon size={24}/></a>
-            <a href="https://www.instagram.com/accounts/login/?next=%2Fjohatenterprises%2F&source=omni_redirect" className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"><InstagramLogoIcon size={24}/></a>
-            <a href="https://www.linkedin.com/in/james-taylor-69b20544/" className="p-2.5 border border-[#FFFFFF80] rounded-full flex items-center justify-center hover:scale-105"><LinkedinLogoIcon size={24}/></a>
-          </div>
-
-          {/* DECORATIVE CIRCLES */}
-          <div className="absolute bottom-0 right-0 z-0">
-            <div className="w-[259px] h-[259px] bg-[#2A2727] rounded-full translate-x-1/4 translate-y-1/4"></div>
-            <div className="w-[128px] h-[128px] bg-[#48484880] rounded-full absolute bottom-[70px] right-[140px] "></div>
-          </div>
-
-        </div>
+              {/* DECORATIVE CIRCLES */}
+              <div className="absolute bottom-0 right-0 z-0">
+                <div className="w-[259px] h-[259px] bg-[#2A2727] rounded-full translate-x-1/4 translate-y-1/4"></div>
+                <div className="w-[128px] h-[128px] bg-[#48484880] rounded-full absolute bottom-[70px] right-[140px] "></div>
+              </div>
+            </div>
 
             {/* RIGHT */}
             <div className="bg-white py-[60px] px-0 md:px-10 px-4 md:px-8 lg:pl-10 lg:pr-10 xl:pl-[50px] xl:pr-[112px]">
@@ -184,17 +226,14 @@ useEffect(() => {
                 onSubmit={handleSubmit(onSubmitForm)}
                 className="grid grid-cols-1 md:grid-cols-2 gap-[40px]"
               >
-
                 {/* FIRST NAME */}
                 <div ref={(el) => (rightItemsRef.current[0] = el)}>
                   <label className="text-sm">First Name</label>
                   <input
-                   
                     {...register("firstname", {
                       required: "Firstname is required",
                       pattern: {
-                        value:
-                          /^[A-Za-z\s]+$/,
+                        value: /^[A-Za-z\s]+$/,
                         message: "Only letters are allowed",
                       },
                     })}
@@ -212,8 +251,7 @@ useEffect(() => {
                     {...register("lastname", {
                       required: "Lastname is required",
                       pattern: {
-                        value:
-                          /^[A-Za-z\s]+$/,
+                        value: /^[A-Za-z\s]+$/,
                         message: "Only letters are allowed",
                       },
                     })}
@@ -248,61 +286,65 @@ useEffect(() => {
                   <label className="text-sm">Phone</label>
                   <input
                     {...register("phone", {
-            required: "Phone number is required",
-            validate: {
-  validFormat: (value) => {
-    if (value === "") return true;
+                      required: "Phone number is required",
+                      validate: {
+                        validFormat: (value) => {
+                          if (value === "") return true;
 
-    const plusCount = (value.match(/\+/g) || []).length;
+                          const plusCount = (value.match(/\+/g) || []).length;
 
-    if (plusCount > 1) {
-      return "Only one '+' is allowed";
-    }
+                          if (plusCount > 1) {
+                            return "Only one '+' is allowed";
+                          }
 
-    if (value.includes("+") && !value.startsWith("+")) {
-      return "'+' must be at the beginning";
-    }
+                          if (value.includes("+") && !value.startsWith("+")) {
+                            return "'+' must be at the beginning";
+                          }
 
-    if (!/^[+]?[0-9]*$/.test(value)) {
-      return "Only digits and '+' at the beginning are allowed";
-    }
+                          if (!/^[+]?[0-9]*$/.test(value)) {
+                            return "Only digits and '+' at the beginning are allowed";
+                          }
 
-    if (value.length > 16) {
-      return "Phone number too long";
-    }
+                          if (value.length > 16) {
+                            return "Phone number too long";
+                          }
 
-    return true;
-  },
-}
-          })}
-          onInput={(e) => {
-           e.preventDefault();
-  let paste = (e.clipboardData || window.clipboardData).getData("text");
+                          return true;
+                        },
+                      },
+                    })}
+                    onInput={(e) => {
+                      e.preventDefault();
+                      let paste = (
+                        e.clipboardData || window.clipboardData
+                      ).getData("text");
 
-  paste = paste.replace(/[^0-9+]/g, "");
+                      paste = paste.replace(/[^0-9+]/g, "");
 
-  if (paste.startsWith("+")) {
-    paste = "+" + paste.slice(1).replace(/\+/g, "");
-  } else {
-    paste = paste.replace(/\+/g, "");
-  }
+                      if (paste.startsWith("+")) {
+                        paste = "+" + paste.slice(1).replace(/\+/g, "");
+                      } else {
+                        paste = paste.replace(/\+/g, "");
+                      }
 
-  setValue("phone", paste.slice(0, 15));
-  }}
-  onPaste={(e) => {
-  e.preventDefault();
-  let paste = (e.clipboardData || window.clipboardData).getData("text");
+                      setValue("phone", paste.slice(0, 15));
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      let paste = (
+                        e.clipboardData || window.clipboardData
+                      ).getData("text");
 
-  paste = paste.replace(/[^0-9+]/g, "");
+                      paste = paste.replace(/[^0-9+]/g, "");
 
-  if (paste.startsWith("+")) {
-    paste = "+" + paste.slice(1).replace(/\+/g, "");
-  } else {
-    paste = paste.replace(/\+/g, "");
-  }
+                      if (paste.startsWith("+")) {
+                        paste = "+" + paste.slice(1).replace(/\+/g, "");
+                      } else {
+                        paste = paste.replace(/\+/g, "");
+                      }
 
-  setValue("phone", paste.slice(0, 15));
-}}
+                      setValue("phone", paste.slice(0, 15));
+                    }}
                     className="w-full border-b py-2"
                   />
                   {errors.phone && (
@@ -311,48 +353,57 @@ useEffect(() => {
                 </div>
 
                 {/* MESSAGE */}
-                <div ref={(el) => (rightItemsRef.current[4] = el)} className="md:col-span-2">
+                <div
+                  ref={(el) => (rightItemsRef.current[4] = el)}
+                  className="md:col-span-2"
+                >
                   <label className="text-sm">Message</label>
-                  <textarea {...register("message")} className="w-full border-b py-2"></textarea>
+                  <textarea
+                    {...register("message")}
+                    className="w-full border-b py-2"
+                  ></textarea>
                 </div>
 
                 {/* CAPTCHA */}
                 {showCaptcha && (
-  <div className="md:col-span-2">
-    <label className="block text-sm mb-[4px]">
-      Captcha: {captcha.num1} + {captcha.num2} = ?
-    </label>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm mb-[4px]">
+                      Captcha: {captcha.num1} + {captcha.num2} = ?
+                    </label>
 
-    <input
-      type="text"
-      placeholder="Your Answer"
-      className={`w-full border-b border-[#8D8D8D] outline-none py-2 ${
-        errors.captcha ? "is-invalid" : ""
-      }`}
-      {...register("captcha", {
-        required: "Captcha is required",
-        validate: (value) =>
-          parseInt(value) === captcha.num1 + captcha.num2 ||
-          "Incorrect captcha",
-      })}
-    />
+                    <input
+                      type="text"
+                      placeholder="Your Answer"
+                      className={`w-full border-b border-[#8D8D8D] outline-none py-2 ${
+                        errors.captcha ? "is-invalid" : ""
+                      }`}
+                      {...register("captcha", {
+                        required: "Captcha is required",
+                        validate: (value) =>
+                          parseInt(value) === captcha.num1 + captcha.num2 ||
+                          "Incorrect captcha",
+                      })}
+                    />
 
-    {errors.captcha && (
-      <p className="text-red-500 text-base">{errors.captcha.message}</p>
-    )}
-  </div>
-)}
+                    {errors.captcha && (
+                      <p className="text-red-500 text-base">
+                        {errors.captcha.message}
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 {/* BUTTON */}
-                <div ref={(el) => (rightItemsRef.current[5] = el)} className="md:col-span-2 text-right">
+                <div
+                  ref={(el) => (rightItemsRef.current[5] = el)}
+                  className="md:col-span-2 text-right"
+                >
                   <button className="animate-btn text-white px-[30px] py-3 rounded-full cursor-pointer">
                     Submit
                   </button>
                 </div>
-
               </form>
             </div>
-
           </div>
         </div>
       </div>
