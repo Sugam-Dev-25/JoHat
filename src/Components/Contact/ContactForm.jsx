@@ -49,22 +49,45 @@ export default function ContactForm() {
   /* =========================
      SUBMIT
   ========================= */
- const onSubmitForm = (data) => {
-  // STEP 1: if captcha not shown → show it first
+const onSubmitForm = async (data) => {
+  // STEP 1: captcha show
   if (!showCaptcha) {
     setShowCaptcha(true);
     generateCaptcha();
     return;
   }
 
-  // STEP 2: captcha already visible → final submit
-  console.log("Final Form Data:", data);
-  console.log("Submitted Successfully");
+  // STEP 2: send data
+  try {
+    const res = await fetch(
+      "https://admin.johat-enterprises.com/wp-json/contact/v1/send",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
-  reset();
-  setShowCaptcha(false);
-  generateCaptcha();
+    const result = await res.json();
+
+    if (result.status === "success") {
+      alert("Message sent successfully ✅");
+
+      reset();
+      setShowCaptcha(false);
+      generateCaptcha();
+    } else {
+      alert("Failed to send ❌");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
 };
+
+
 const sectionRef = useRef(null);
 const leftItemsRef = useRef([]);
 const rightItemsRef = useRef([]);
